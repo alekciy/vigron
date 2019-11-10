@@ -1,0 +1,15 @@
+# phpstorm
+.idea
+# netbeans
+nbproject
+# zend studio
+.buildpath
+.project
+.settings
+
+/vendor
+composer.phar
+# Mac DS_Store
+.DS_Store
+
+/logs/*
