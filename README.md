@@ -48,5 +48,5 @@
     php -r "unlink('composer-setup.php');"
    ./composer.phar install
     ```
-1. Накатываем базу:
+1. Накатываем базу: `psql -h 127.0.0.1 -U vigron -W < db/init.sql`
 1. Запускам приложение командой: `./composer.phar run-script start`, теперь запросы принимаются на 127.0.0.1 порт 8080

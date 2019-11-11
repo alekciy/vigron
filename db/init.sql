@@ -15,6 +15,41 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+ALTER TABLE IF EXISTS ONLY public.money DROP CONSTRAINT IF EXISTS money_purse_id_fk;
+DROP INDEX IF EXISTS public.purse_id_uindex;
+DROP INDEX IF EXISTS public.money_id_uindex;
+DROP INDEX IF EXISTS public.exchange_currency_uindex;
+ALTER TABLE IF EXISTS ONLY public.purse DROP CONSTRAINT IF EXISTS user_id;
+ALTER TABLE IF EXISTS ONLY public.purse DROP CONSTRAINT IF EXISTS purse_pk;
+ALTER TABLE IF EXISTS ONLY public.money DROP CONSTRAINT IF EXISTS money_pk;
+ALTER TABLE IF EXISTS public.purse ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE IF EXISTS public.money ALTER COLUMN id DROP DEFAULT;
+DROP SEQUENCE IF EXISTS public.purse_id_seq;
+DROP TABLE IF EXISTS public.purse;
+DROP SEQUENCE IF EXISTS public.money_id_seq;
+DROP TABLE IF EXISTS public.money;
+DROP TABLE IF EXISTS public.exchange;
+DROP TYPE IF EXISTS public.transaction_type;
+DROP TYPE IF EXISTS public.reason;
+DROP TYPE IF EXISTS public.currency;
+DROP EXTENSION IF EXISTS plpgsql;
+DROP SCHEMA IF EXISTS public;
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
@@ -352,6 +387,13 @@ CREATE UNIQUE INDEX purse_id_uindex ON public.purse USING btree (id);
 
 ALTER TABLE ONLY public.money
     ADD CONSTRAINT money_purse_id_fk FOREIGN KEY (purse_id) REFERENCES public.purse(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
